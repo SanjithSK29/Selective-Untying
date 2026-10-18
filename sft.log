@@ -1,0 +1,118 @@
+loaded calibration (eligible=6,341)
+loading SFT pairs...
+train pairs: 20,000 | eval pairs: 500
+  tied_seed0 step 0/1000 loss 2.070
+  tied_seed0 step 200/1000 loss 1.472
+  tied_seed0 step 400/1000 loss 1.584
+  tied_seed0 step 600/1000 loss 1.570
+  tied_seed0 step 800/1000 loss 1.643
+[tied_seed0] keyword_satisfaction=0.3660 response_nll=1.5075 (213s)
+  tied_seed1 step 0/1000 loss 1.883
+  tied_seed1 step 200/1000 loss 1.441
+  tied_seed1 step 400/1000 loss 1.596
+  tied_seed1 step 600/1000 loss 1.548
+  tied_seed1 step 800/1000 loss 1.526
+[tied_seed1] keyword_satisfaction=0.2960 response_nll=1.5073 (226s)
+  tied_seed2 step 0/1000 loss 1.835
+  tied_seed2 step 200/1000 loss 1.665
+  tied_seed2 step 400/1000 loss 1.553
+  tied_seed2 step 600/1000 loss 1.480
+  tied_seed2 step 800/1000 loss 1.473
+[tied_seed2] keyword_satisfaction=0.3700 response_nll=1.5075 (222s)
+  full_seed0 step 0/1000 loss 2.070
+  full_seed0 step 200/1000 loss 1.472
+  full_seed0 step 400/1000 loss 1.586
+  full_seed0 step 600/1000 loss 1.568
+  full_seed0 step 800/1000 loss 1.642
+[full_seed0] keyword_satisfaction=0.3460 response_nll=1.5047 (222s)
+  full_seed1 step 0/1000 loss 1.883
+  full_seed1 step 200/1000 loss 1.443
+  full_seed1 step 400/1000 loss 1.594
+  full_seed1 step 600/1000 loss 1.549
+  full_seed1 step 800/1000 loss 1.523
+[full_seed1] keyword_satisfaction=0.2860 response_nll=1.5046 (210s)
+  full_seed2 step 0/1000 loss 1.835
+  full_seed2 step 200/1000 loss 1.662
+  full_seed2 step 400/1000 loss 1.550
+  full_seed2 step 600/1000 loss 1.482
+  full_seed2 step 800/1000 loss 1.473
+[full_seed2] keyword_satisfaction=0.3600 response_nll=1.5051 (200s)
+
+[conflict] selected 400 rows
+  conflict_seed0 step 0/1000 loss 2.070
+  conflict_seed0 step 200/1000 loss 1.473
+  conflict_seed0 step 400/1000 loss 1.590
+  conflict_seed0 step 600/1000 loss 1.574
+  conflict_seed0 step 800/1000 loss 1.645
+[conflict_seed0] keyword_satisfaction=0.3680 response_nll=1.5089 (207s)
+  conflict_seed1 step 0/1000 loss 1.883
+  conflict_seed1 step 200/1000 loss 1.444
+  conflict_seed1 step 400/1000 loss 1.597
+  conflict_seed1 step 600/1000 loss 1.547
+  conflict_seed1 step 800/1000 loss 1.525
+[conflict_seed1] keyword_satisfaction=0.3080 response_nll=1.5087 (212s)
+  conflict_seed2 step 0/1000 loss 1.835
+  conflict_seed2 step 200/1000 loss 1.666
+  conflict_seed2 step 400/1000 loss 1.554
+  conflict_seed2 step 600/1000 loss 1.483
+  conflict_seed2 step 800/1000 loss 1.474
+[conflict_seed2] keyword_satisfaction=0.3600 response_nll=1.5089 (205s)
+
+[frequency] selected 400 rows
+  frequency_seed0 step 0/1000 loss 2.070
+  frequency_seed0 step 200/1000 loss 1.475
+  frequency_seed0 step 400/1000 loss 1.586
+  frequency_seed0 step 600/1000 loss 1.570
+  frequency_seed0 step 800/1000 loss 1.644
+[frequency_seed0] keyword_satisfaction=0.3380 response_nll=1.5073 (210s)
+  frequency_seed1 step 0/1000 loss 1.883
+  frequency_seed1 step 200/1000 loss 1.442
+  frequency_seed1 step 400/1000 loss 1.596
+  frequency_seed1 step 600/1000 loss 1.549
+  frequency_seed1 step 800/1000 loss 1.526
+[frequency_seed1] keyword_satisfaction=0.3140 response_nll=1.5069 (210s)
+  frequency_seed2 step 0/1000 loss 1.835
+  frequency_seed2 step 200/1000 loss 1.663
+  frequency_seed2 step 400/1000 loss 1.549
+  frequency_seed2 step 600/1000 loss 1.482
+  frequency_seed2 step 800/1000 loss 1.475
+[frequency_seed2] keyword_satisfaction=0.3700 response_nll=1.5070 (205s)
+
+[freq_random] selected 400 rows
+  freq_random_seed0 step 0/1000 loss 2.070
+  freq_random_seed0 step 200/1000 loss 1.473
+  freq_random_seed0 step 400/1000 loss 1.585
+  freq_random_seed0 step 600/1000 loss 1.572
+  freq_random_seed0 step 800/1000 loss 1.644
+[freq_random_seed0] keyword_satisfaction=0.3700 response_nll=1.5085 (209s)
+  freq_random_seed1 step 0/1000 loss 1.883
+  freq_random_seed1 step 200/1000 loss 1.444
+  freq_random_seed1 step 400/1000 loss 1.602
+  freq_random_seed1 step 600/1000 loss 1.548
+  freq_random_seed1 step 800/1000 loss 1.526
+[freq_random_seed1] keyword_satisfaction=0.3120 response_nll=1.5082 (212s)
+  freq_random_seed2 step 0/1000 loss 1.835
+  freq_random_seed2 step 200/1000 loss 1.667
+  freq_random_seed2 step 400/1000 loss 1.555
+  freq_random_seed2 step 600/1000 loss 1.482
+  freq_random_seed2 step 800/1000 loss 1.475
+[freq_random_seed2] keyword_satisfaction=0.3600 response_nll=1.5086 (203s)
+
+[grad_norm] selected 400 rows
+  grad_norm_seed0 step 0/1000 loss 2.070
+  grad_norm_seed0 step 200/1000 loss 1.475
+  grad_norm_seed0 step 400/1000 loss 1.585
+  grad_norm_seed0 step 600/1000 loss 1.569
+  grad_norm_seed0 step 800/1000 loss 1.645
+[grad_norm_seed0] keyword_satisfaction=0.3440 response_nll=1.5067 (208s)
+  grad_norm_seed1 step 0/1000 loss 1.883
+  grad_norm_seed1 step 200/1000 loss 1.441
+  grad_norm_seed1 step 400/1000 loss 1.595
+  grad_norm_seed1 step 600/1000 loss 1.547
+  grad_norm_seed1 step 800/1000 loss 1.525
+[grad_norm_seed1] keyword_satisfaction=0.2980 response_nll=1.5064 (209s)
+  grad_norm_seed2 step 0/1000 loss 1.835
+  grad_norm_seed2 step 200/1000 loss 1.659
+  grad_norm_seed2 step 400/1000 loss 1.549
+  grad_norm_seed2 step 600/1000 loss 1.482
+  grad_norm_seed2 step 800/1000 loss 1.475

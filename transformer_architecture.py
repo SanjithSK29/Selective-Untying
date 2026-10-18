@@ -65,6 +65,7 @@ class SelectiveTransformer(nn.Module):
     def __init__(
         self,
         config: Optional[TransformerConfig] = None,
+        output_mode: Optional[str] = None,
         selected_token_ids: Optional[Sequence[int]] = None,
         eligible_token_count: Optional[int] = None,
     ):
@@ -92,12 +93,28 @@ class SelectiveTransformer(nn.Module):
                 raise ValueError("Supply eligible_token_count to enforce the 10% cap.")
             if len(ids) > eligible_token_count // 10:
                 raise ValueError("Selected rows exceed 10% of the eligible pool.")
+
+        # Resolve the output head. ``None`` keeps the old two-mode API working:
+        # pass ``selected_token_ids`` -> "selective", otherwise -> "tied".
+        if output_mode is None:
+            output_mode = "selective" if ids else "tied"
+        if output_mode not in ("tied", "full", "selective"):
+            raise ValueError("output_mode must be 'tied', 'full', or 'selective'.")
+        if output_mode == "full" and ids:
+            raise ValueError("'full' untying cannot be combined with selected_token_ids.")
+        if output_mode == "selective" and not ids:
+            raise ValueError("'selective' untying requires selected_token_ids.")
+        self.output_mode = output_mode
+
         self.token_embedding = nn.Embedding(c.vocab_size, c.d_model)
         self.position_embedding = nn.Embedding(c.context_length, c.d_model)
         self.blocks = nn.ModuleList([TransformerBlock(c) for _ in range(c.n_layers)])
         self.final_norm = nn.LayerNorm(c.d_model, eps=c.layer_norm_eps)
         self.register_buffer("selected_token_ids", torch.tensor(ids, dtype=torch.long))
         self.output_offsets = nn.Parameter(torch.zeros(len(ids), c.d_model))
+        if output_mode == "full":
+            # Fully untied: a separate output embedding (no weight sharing).
+            self.output_embedding = nn.Embedding(c.vocab_size, c.d_model)
         self.apply(self._initialize)
 
     @staticmethod
@@ -122,12 +139,27 @@ class SelectiveTransformer(nn.Module):
         for block in self.blocks:
             x = block(x)
         hidden = self.final_norm(x)
-        # F.linear uses the SAME Parameter as input lookup: genuine weight tying.
-        logits = F.linear(hidden, self.token_embedding.weight)
-        if self.selected_token_ids.numel():
-            corrections = F.linear(hidden, self.output_offsets)
-            logits = logits.index_add(-1, self.selected_token_ids, corrections)
+        if self.output_mode == "full":
+            # Fully untied: separate output embedding, no sharing with input.
+            logits = F.linear(hidden, self.output_embedding.weight)
+        else:
+            # F.linear uses the SAME Parameter as input lookup: genuine weight tying.
+            logits = F.linear(hidden, self.token_embedding.weight)
+            if self.output_mode == "selective":
+                corrections = F.linear(hidden, self.output_offsets)
+                logits = logits.index_add(-1, self.selected_token_ids, corrections)
         return logits
+
+    @torch.no_grad()
+    def init_output_from_input(self) -> None:
+        """Copy the tied input embedding into the (full) output head.
+
+        Makes a fully-untied model start byte-for-byte identical to its tied
+        counterpart at SFT step 0, so any divergence is due to untying itself.
+        """
+        if self.output_mode != "full":
+            raise ValueError("init_output_from_input() only valid in 'full' mode.")
+        self.output_embedding.weight.copy_(self.token_embedding.weight)
 
     def parameter_count(self) -> int:
         return sum(p.numel() for p in self.parameters())
