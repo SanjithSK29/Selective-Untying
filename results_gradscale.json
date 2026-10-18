@@ -1,0 +1,56 @@
+{
+  "gradscale_a2_seed0": {
+    "alpha": 2.0,
+    "seed": 0,
+    "keyword_satisfaction": 0.354,
+    "response_nll": 1.5069
+  },
+  "gradscale_a2_seed1": {
+    "alpha": 2.0,
+    "seed": 1,
+    "keyword_satisfaction": 0.3,
+    "response_nll": 1.5067
+  },
+  "gradscale_a2_seed2": {
+    "alpha": 2.0,
+    "seed": 2,
+    "keyword_satisfaction": 0.372,
+    "response_nll": 1.5069
+  },
+  "gradscale_a5_seed0": {
+    "alpha": 5.0,
+    "seed": 0,
+    "keyword_satisfaction": 0.346,
+    "response_nll": 1.5054
+  },
+  "gradscale_a5_seed1": {
+    "alpha": 5.0,
+    "seed": 1,
+    "keyword_satisfaction": 0.286,
+    "response_nll": 1.5053
+  },
+  "gradscale_a5_seed2": {
+    "alpha": 5.0,
+    "seed": 2,
+    "keyword_satisfaction": 0.372,
+    "response_nll": 1.5056
+  },
+  "gradscale_a10_seed0": {
+    "alpha": 10.0,
+    "seed": 0,
+    "keyword_satisfaction": 0.34,
+    "response_nll": 1.504
+  },
+  "gradscale_a10_seed1": {
+    "alpha": 10.0,
+    "seed": 1,
+    "keyword_satisfaction": 0.288,
+    "response_nll": 1.5039
+  },
+  "gradscale_a10_seed2": {
+    "alpha": 10.0,
+    "seed": 2,
+    "keyword_satisfaction": 0.356,
+    "response_nll": 1.5041
+  }
+}
