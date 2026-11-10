@@ -18,6 +18,7 @@ Greeshma G. Course: UE24AM342AA1, Advanced Foundations in Machine Learning.
 
 ## Contents
 
+- [Problem and motivation](#problem-and-motivation)
 - [Method](#method)
 - [Main results: 12 seeds](#main-results-12-seeds)
 - [Exploratory results: 3 seeds](#exploratory-results-3-seeds)
@@ -28,6 +29,20 @@ Greeshma G. Course: UE24AM342AA1, Advanced Foundations in Machine Learning.
 - [Evaluation, overlap and limitations](#evaluation-overlap-and-limitations)
 - [Repository guide](#repository-guide)
 - [References](#references)
+
+## Problem and motivation
+
+Small language models often save memory by sharing one token embedding table
+between reading input words and predicting the next word. These two roles can
+push the same token vector in different directions, raising the question of
+whether sharing limits the model's ability to follow instructions.
+
+Separating the entire input and output tables adds many parameters. We investigate
+a cheaper alternative: give only the most gradient-conflicted tokens their own
+output-side offsets. Our goal is to test whether this targeted extra flexibility
+helps a small model include requested words in generated stories, and whether
+gradient conflict selects useful tokens better than simpler choices at the same
+parameter budget.
 
 ## Method
 
