@@ -1,0 +1,13 @@
+# Core
+torch
+numpy
+tokenizers
+tqdm
+
+# Data download (download_data.py)
+datasets
+huggingface_hub
+
+# Tested with Python 3.13 on an NVIDIA RTX 4060 Laptop GPU (8 GB), bf16.
+# For exact reproducibility, replace the lines above with the output of
+#   pip freeze | grep -iE "^(torch|numpy|tokenizers|tqdm|datasets|huggingface-hub)=="
