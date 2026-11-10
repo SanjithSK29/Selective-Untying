@@ -203,9 +203,11 @@ def generate(model, instr_ids, ctx, eos_id, device, max_new=256):
     return ids[0].tolist()
 
 
-def evaluate(model, eval_pairs, tok, ctx, device):
+def evaluate(model, eval_pairs, tok, ctx, device, return_details=False):
     eos = tok.token_to_id("<eos>")
     hits = 0
+    recall_sum = 0.0
+    missing_words = []  # per prompt: requested words absent from the generation
     total_nll = 0.0
     total_tok = 0
 
@@ -226,10 +228,19 @@ def evaluate(model, eval_pairs, tok, ctx, device):
         gen_ids = generate(model, instr, ctx, eos, device)
         gen_text = tok.decode(gen_ids[len(instr):])
         present = set(_WORD_RE.findall(gen_text.lower()))
-        if all(w in present for w in words):
+        missing = [w for w in words if w not in present]
+        if not missing:
             hits += 1
+        recall_sum += (len(words) - len(missing)) / max(len(words), 1)
+        missing_words.append(missing)
 
-    return hits / len(eval_pairs), total_nll / max(total_tok, 1)
+    sat = hits / len(eval_pairs)
+    nll = total_nll / max(total_tok, 1)
+    if return_details:
+        details = {"keyword_recall": recall_sum / len(eval_pairs),
+                   "missing_words": missing_words}
+        return sat, nll, details
+    return sat, nll
 
 
 # --------------------------------------------------------------------------- #
@@ -334,13 +345,17 @@ def main():
                     print(f"  {key} step {step}/{args.max_steps} loss {loss.item():.3f}")
 
             model.eval()
-            sat, nll = evaluate(model, val_pairs, tok, ctx, device)
+            sat, nll, det = evaluate(model, val_pairs, tok, ctx, device,
+                                     return_details=True)
             results[key] = {"method": method, "seed": seed,
                             "keyword_satisfaction": round(sat, 4),
-                            "response_nll": round(nll, 4)}
+                            "response_nll": round(nll, 4),
+                            "keyword_recall": round(det["keyword_recall"], 4),
+                            "missing_words": det["missing_words"]}
             with open(args.out, "w") as f:  # save incrementally (crash-safe)
                 json.dump(results, f, indent=2)
             print(f"[{key}] keyword_satisfaction={sat:.4f} response_nll={nll:.4f} "
+                  f"keyword_recall={det['keyword_recall']:.4f} "
                   f"({time.time() - t0:.0f}s)")
 
     with open(args.out, "w") as f:

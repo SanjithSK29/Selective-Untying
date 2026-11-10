@@ -1,13 +1,12 @@
 # Core
-torch
-numpy
-tokenizers
-tqdm
+torch==2.14.1
+numpy==2.5.2
+tokenizers==0.23.3
+tqdm==4.67.3
 
 # Data download (download_data.py)
-datasets
-huggingface_hub
+datasets==5.1.0
+huggingface_hub==1.33.0
 
 # Tested with Python 3.13 on an NVIDIA RTX 4060 Laptop GPU (8 GB), bf16.
-# For exact reproducibility, replace the lines above with the output of
-#   pip freeze | grep -iE "^(torch|numpy|tokenizers|tqdm|datasets|huggingface-hub)=="
+# Versions pinned from: pip freeze | grep -iE "^(torch|numpy|tokenizers|tqdm|datasets|huggingface-hub)=="
