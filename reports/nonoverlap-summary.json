@@ -1,0 +1,148 @@
+{
+  "scope": "Post-hoc sensitivity analysis on 371 stories with no normalized exact match in scanned training sources. Not a new independent test set; near-duplicate overlap not checked. NLL unavailable.",
+  "audit_sha256": "81793f9ecdab75e046cbc5ffb877bb239f04c5ac617fc729438174019ecb322b",
+  "methods": {
+    "tied": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": 33.872416891284814,
+        "sample_sd": 2.7639733916872746,
+        "ci95": [
+          32.11627198161826,
+          35.62856180095137
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 70.70979335130278,
+        "sample_sd": 1.543890530191705,
+        "ci95": [
+          69.72885210786214,
+          71.69073459474342
+        ]
+      }
+    },
+    "conflict": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": 34.052111410601974,
+        "sample_sd": 2.7806502967029374,
+        "ci95": [
+          32.28537050100998,
+          35.81885232019397
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 70.80712788259959,
+        "sample_sd": 1.3000127284735326,
+        "ci95": [
+          69.9811392017835,
+          71.63311656341567
+        ]
+      }
+    },
+    "frequency": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": 34.14195867026056,
+        "sample_sd": 2.336656969166214,
+        "ci95": [
+          32.65731766236246,
+          35.626599678158655
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 70.65738244983528,
+        "sample_sd": 1.6106385261214566,
+        "ci95": [
+          69.63403155309081,
+          71.68073334657976
+        ]
+      }
+    },
+    "freq_random": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": 34.14195867026055,
+        "sample_sd": 2.5527893301468665,
+        "ci95": [
+          32.51999371174414,
+          35.76392362877696
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 70.53758610362384,
+        "sample_sd": 1.5839911498888346,
+        "ci95": [
+          69.53116614198447,
+          71.5440060652632
+        ]
+      }
+    }
+  },
+  "paired_comparisons": {
+    "conflict_minus_frequency": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": -0.08984725965858016,
+        "sample_sd": 1.9650966485285326,
+        "ci95": [
+          -1.3384101028086417,
+          1.1587155834914813
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 0.1497454327642959,
+        "sample_sd": 0.8814305778274484,
+        "ci95": [
+          -0.41028883787359505,
+          0.7097797034021868
+        ]
+      }
+    },
+    "conflict_minus_freq_random": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": -0.08984725965858005,
+        "sample_sd": 1.7556305856574914,
+        "ci95": [
+          -1.205321715935888,
+          1.025627196618728
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 0.26954177897573944,
+        "sample_sd": 0.6524128252132946,
+        "ci95": [
+          -0.14498155379053074,
+          0.6840651117420096
+        ]
+      }
+    },
+    "conflict_minus_tied": {
+      "keyword_satisfaction": {
+        "n": 12,
+        "mean": 0.17969451931716218,
+        "sample_sd": 1.3468918539458492,
+        "ci95": [
+          -0.6760797367925975,
+          1.0354687754269218
+        ]
+      },
+      "keyword_recall": {
+        "n": 12,
+        "mean": 0.09733453129679344,
+        "sample_sd": 0.6182905653104008,
+        "ci95": [
+          -0.29550855186396036,
+          0.4901776144575472
+        ]
+      }
+    }
+  }
+}

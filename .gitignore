@@ -1,2 +1,6 @@
 dataset/
 checkpoints/
+runs/
+__pycache__/
+*.py[cod]
+.venv/

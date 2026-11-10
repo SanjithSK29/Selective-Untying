@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+from reproducibility import atomic_json, provenance
 from array import array
 
 import numpy as np
@@ -82,6 +83,8 @@ def main():
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
 
+    if args.vocab_size != 8000 or args.context_length != 256:
+        raise ValueError("This experiment requires vocab_size=8000 and context_length=256")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -181,6 +184,8 @@ def main():
 
     # ---- save -------------------------------------------------------------- #
     out = {
+        "manifest": provenance(args, [args.tokenizer_path, args.ckpt_path, args.sft_train]),
+        "calibration_tokens": len(data),
         "vocab_size": V,
         "min_freq": args.min_freq,
         "max_select": max_select,
@@ -193,8 +198,7 @@ def main():
         "grad_norm": grad_norm.tolist(),
         "eligible": eligible.tolist(),
     }
-    with open(args.out, "w") as f:
-        json.dump(out, f)
+    atomic_json(args.out, out)
     print(f"wrote {args.out}")
 
 

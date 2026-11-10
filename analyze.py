@@ -24,13 +24,15 @@ from common import load_tokenizer
 
 
 def spearman(a, b):
-    """Rank correlation via Pearson on ranks."""
-    ra = np.argsort(np.argsort(a)).astype(np.float64)
-    rb = np.argsort(np.argsort(b)).astype(np.float64)
-    return np.corrcoef(ra, rb)[0, 1]
+    """Spearman correlation using average ranks for tied values."""
+    from scipy.stats import spearmanr
+    return float(spearmanr(a, b).statistic)
 
 
 def main():
+    import sys
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     p = argparse.ArgumentParser(description="Analyze the conflict signal")
     p.add_argument("--calibration", default="calibration.json")
     p.add_argument("--tokenizer_path", default="tokenizer.json")
@@ -70,8 +72,9 @@ def main():
     print("\n=== mean conflict by frequency decile (low->high freq) ===")
     q = np.quantile(f, np.linspace(0, 1, 11))
     for i in range(10):
-        sel = (f >= q[i]) & (f <= q[i + 1])
-        print(f"  decile {i + 1:2d}: n={int(sel.sum()):6d}  mean conflict={c[sel].mean():+.4f}")
+        sel = (f >= q[i]) & ((f <= q[i + 1]) if i == 9 else (f < q[i + 1]))
+        mean = float(c[sel].mean()) if sel.any() else float("nan")
+        print(f"  decile {i + 1:2d}: n={int(sel.sum()):6d}  mean conflict={mean:+.4f}")
 
     # selection overlap
     selected = set(calib["selected_token_ids"])

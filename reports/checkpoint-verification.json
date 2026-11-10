@@ -1,0 +1,13 @@
+{
+  "checkpoint_sha256": "b18fabcfc8430769487a3bb96d1e8b83c7eb49510145eba6fecb300e3bd270a0",
+  "received_tokenizer_sha256": "671d1318102429974e9589d2c56d94cb305b3f522e2567340ad1e5ead4108647",
+  "repository_tokenizer_sha256": "f1c80c31e876847d555f0d015232b85f1c1db1757b3446fd5343bf78513474c9",
+  "tokenizer_structurally_identical": true,
+  "step": 28503,
+  "validation_loss": 1.4663459479808807,
+  "validation_perplexity_from_metadata": 4.333371809983119,
+  "parameters": 13817856,
+  "strict_backbone_validation": "passed",
+  "finite_forward_pass": "passed",
+  "provenance_note": "Supplied by project author via user. Metadata matches reported setup; independent evaluation not yet rerun."
+}

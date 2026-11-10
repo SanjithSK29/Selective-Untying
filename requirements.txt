@@ -1,12 +1,8 @@
-# Core
+# Historical GPU experiment environment (Python 3.13, RTX 4060 Laptop, CUDA 13.0).
+# CPU checks were also run on Python 3.14; see VALIDATION.md for actual versions.
 torch==2.14.1
 numpy==2.5.2
 tokenizers==0.23.3
 tqdm==4.67.3
-
-# Data download (download_data.py)
 datasets==5.1.0
 huggingface_hub==1.33.0
-
-# Tested with Python 3.13 on an NVIDIA RTX 4060 Laptop GPU (8 GB), bf16.
-# Versions pinned from: pip freeze | grep -iE "^(torch|numpy|tokenizers|tqdm|datasets|huggingface-hub)=="

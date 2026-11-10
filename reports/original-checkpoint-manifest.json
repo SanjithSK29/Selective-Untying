@@ -1,0 +1,15 @@
+{
+  "checkpoint_sha256": "b18fabcfc8430769487a3bb96d1e8b83c7eb49510145eba6fecb300e3bd270a0",
+  "tokenizer_sha256": "671d1318102429974e9589d2c56d94cb305b3f522e2567340ad1e5ead4108647",
+  "config": {
+    "vocab_size": 8000,
+    "context_length": 256,
+    "n_layers": 6,
+    "d_model": 384,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "layer_norm_eps": 1e-05
+  },
+  "output_mode": "tied",
+  "parameters": 13817856
+}

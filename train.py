@@ -23,11 +23,14 @@ Run:
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import csv
 import math
 import os
 import time
 from array import array
+from dataclasses import asdict
+from reproducibility import provenance, atomic_json
 
 import numpy as np
 import torch
@@ -170,6 +173,9 @@ def main():
                         help="use torch.compile (faster, slower first call)")
     args = parser.parse_args()
 
+    if args.vocab_size != 8000 or args.context_length != 256:
+        raise ValueError("This experiment requires vocab_size=8000 and context_length=256")
+
     # ---- device / seeds --------------------------------------------------- #
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device: {device}")
@@ -191,14 +197,29 @@ def main():
               f"(vocab={tok.get_vocab_size()})")
     eos_id = tok.token_to_id("<eos>")
 
-    # ---- 2. tokenize data (cached) --------------------------------------- #
-    if not os.path.exists(args.train_bin):
-        n = tokenize_to_bin(tok, args.train_csv, args.train_bin, eos_id, "tokenize train")
-        print(f"Wrote {args.train_bin} ({n:,} tokens)")
-    if not os.path.exists(args.val_bin):
-        n = tokenize_to_bin(tok, args.val_csv, args.val_bin, eos_id, "tokenize val")
-        print(f"Wrote {args.val_bin} ({n:,} tokens)")
+    # Cached token arrays are reusable only with matching source/tokenizer hashes.
+    from reproducibility import sha256
+    for source, binary, desc in ((args.train_csv, args.train_bin, "tokenize train"),
+                                  (args.val_csv, args.val_bin, "tokenize val")):
+        cache_manifest = binary + ".manifest.json"
+        expected = {"source_sha256": sha256(source),
+                    "tokenizer_sha256": sha256(args.tokenizer_path),
+                    "dtype": "uint16", "byteorder": __import__('sys').byteorder}
+        if os.path.exists(binary):
+            import json
+            if not os.path.exists(cache_manifest):
+                raise ValueError(f"Unverified legacy token cache: {binary}. Use new --train_bin/--val_bin paths.")
+            recorded = json.load(open(cache_manifest, encoding="utf-8"))
+            if recorded != dict(expected, binary_sha256=sha256(binary)):
+                raise ValueError(f"Token cache provenance mismatch: {binary}. Use a new cache path.")
+        else:
+            os.makedirs(os.path.dirname(binary) or ".", exist_ok=True)
+            n = tokenize_to_bin(tok, source, binary, eos_id, desc)
+            atomic_json(cache_manifest, dict(expected, binary_sha256=sha256(binary)))
+            print(f"Wrote {binary} ({n:,} tokens)")
 
+    manifest = provenance(args, [args.train_csv, args.val_csv, args.tokenizer_path,
+                                 args.train_bin, args.val_bin])
     # ---- 3. model ---------------------------------------------------------- #
     model = SelectiveTransformer().to(device)
     if args.compile:
@@ -211,8 +232,15 @@ def main():
     start_step = 0
     os.makedirs(args.ckpt_dir, exist_ok=True)
     latest = os.path.join(args.ckpt_dir, "latest.pt")
-    if args.resume and os.path.exists(latest):
-        ckpt = torch.load(latest, map_location=device)
+    ckpt = None
+    if os.path.exists(latest) and not args.resume:
+        raise ValueError("Checkpoint directory already contains latest.pt. Use --resume or a new --ckpt_dir.")
+    if args.resume:
+        if not os.path.exists(latest):
+            raise ValueError("No latest.pt to resume")
+        ckpt = torch.load(latest, map_location=device, weights_only=True)
+        if ckpt.get("manifest") != manifest or "data_ptr" not in ckpt:
+            raise ValueError("Cannot safely resume legacy or mismatched checkpoint. Use a new checkpoint directory.")
         model.load_state_dict(ckpt["model"])
         optimizer.load_state_dict(ckpt["optimizer"])
         start_step = ckpt["step"]
@@ -231,8 +259,12 @@ def main():
     rng.shuffle(block_starts)
     steps_per_epoch = num_blocks // (args.batch_size * args.grad_accum_steps)
 
+    if num_blocks < args.batch_size or n_val <= ctx + 1:
+        raise ValueError("Dataset too small for requested batch/context")
     if args.max_steps <= 0:
         args.max_steps = steps_per_epoch
+    if args.max_steps <= 0:
+        raise ValueError("No complete training steps available")
     print(f"train tokens: {n_train:,} | blocks: {num_blocks:,} | "
           f"steps/epoch: {steps_per_epoch:,} | max_steps: {args.max_steps:,}")
 
@@ -240,7 +272,7 @@ def main():
     val_starts = rng.integers(0, n_val - ctx - 1, size=(args.eval_iters,), dtype=np.int64)
 
     autocast_ctx = (torch.autocast(device_type="cuda", dtype=torch.bfloat16)
-                    if device.type == "cuda" else torch.no_grad())
+                    if device.type == "cuda" else nullcontext())
 
     @torch.no_grad()
     def evaluate():
@@ -257,6 +289,13 @@ def main():
     # ---- 4. training loop --------------------------------------------------- #
     model.train()
     data_ptr = 0
+    if ckpt is not None:
+        data_ptr = ckpt["data_ptr"]
+        block_starts = ckpt["block_starts"].cpu().numpy()
+        rng.bit_generator.state = ckpt["numpy_rng"]
+        torch.set_rng_state(ckpt["torch_rng"].cpu())
+        if device.type == "cuda" and ckpt.get("cuda_rng") is not None:
+            torch.cuda.set_rng_state_all(ckpt["cuda_rng"])
     raw_model = model._orig_mod if hasattr(model, "_orig_mod") else model
     val_loss = None
 
@@ -311,8 +350,16 @@ def main():
         if step % args.ckpt_interval == 0 or step == args.max_steps:
             ckpt = {
                 "model": raw_model.state_dict(),
+                "config": asdict(raw_model.config),
+                "manifest": manifest,
+                "output_mode": "tied",
                 "optimizer": optimizer.state_dict(),
                 "step": step,
+                "data_ptr": data_ptr,
+                "block_starts": torch.from_numpy(block_starts.copy()),
+                "numpy_rng": rng.bit_generator.state,
+                "torch_rng": torch.get_rng_state(),
+                "cuda_rng": torch.cuda.get_rng_state_all() if device.type == "cuda" else None,
                 "val_loss": val_loss,
                 "vocab_size": args.vocab_size,
                 "context_length": ctx,

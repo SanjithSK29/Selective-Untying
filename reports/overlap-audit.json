@@ -1,0 +1,413 @@
+{
+  "normalization": "Unicode casefold; collapse whitespace; strip edges; preserve punctuation",
+  "scope": "Normalized exact story matches only. Near duplicates and semantic overlap are not tested.",
+  "sources": {
+    "instruct_revision": "ee050ed1f8720795be342921335e821856a2b42e",
+    "stories_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+    "tokenizer_sha256": "f1c80c31e876847d555f0d015232b85f1c1db1757b3446fd5343bf78513474c9"
+  },
+  "scanned": {
+    "validation_records": 1891,
+    "sft_train_records": 83642,
+    "calibration_records": 122586,
+    "calibration_tokens": 10000076
+  },
+  "sft_train": {
+    "matched_eval_examples": 0,
+    "eval_examples": 500,
+    "fraction": 0.0,
+    "eval_indices_zero_based": []
+  },
+  "calibration_train": {
+    "matched_eval_examples": 0,
+    "eval_examples": 500,
+    "fraction": 0.0,
+    "eval_indices_zero_based": []
+  },
+  "evaluation_unique_stories": 500,
+  "pretraining_train": {
+    "status": "complete",
+    "scanned_records": 2119719,
+    "matched_eval_examples": 129,
+    "eval_examples": 500,
+    "fraction": 0.258,
+    "eval_indices_zero_based": [
+      42,
+      43,
+      44,
+      46,
+      49,
+      50,
+      51,
+      53,
+      56,
+      57,
+      58,
+      59,
+      61,
+      62,
+      63,
+      64,
+      68,
+      69,
+      70,
+      72,
+      73,
+      74,
+      75,
+      76,
+      78,
+      79,
+      81,
+      83,
+      84,
+      85,
+      88,
+      89,
+      90,
+      91,
+      95,
+      101,
+      102,
+      104,
+      105,
+      107,
+      110,
+      111,
+      112,
+      115,
+      119,
+      122,
+      123,
+      124,
+      125,
+      126,
+      130,
+      133,
+      134,
+      135,
+      137,
+      138,
+      140,
+      141,
+      145,
+      146,
+      147,
+      148,
+      149,
+      151,
+      154,
+      156,
+      157,
+      159,
+      160,
+      161,
+      164,
+      166,
+      167,
+      169,
+      170,
+      171,
+      172,
+      303,
+      305,
+      306,
+      307,
+      425,
+      426,
+      427,
+      428,
+      432,
+      433,
+      436,
+      438,
+      441,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      455,
+      458,
+      462,
+      464,
+      466,
+      467,
+      470,
+      471,
+      473,
+      474,
+      475,
+      478,
+      480,
+      481,
+      482,
+      485,
+      486,
+      487,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499
+    ]
+  },
+  "results_alignment_checks": {
+    "mismatches": [],
+    "note": "Checks missing words against reconstructed prompts and aggregate recall; not a full historical provenance proof."
+  },
+  "nonoverlap_subset_lexical_metrics": {
+    "tied_seed0": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3692722371967655,
+      "keyword_recall": 0.7214734950584007
+    },
+    "tied_seed1": {
+      "examples": 371,
+      "keyword_satisfaction": 0.2884097035040431,
+      "keyword_recall": 0.6819407008086253
+    },
+    "tied_seed2": {
+      "examples": 371,
+      "keyword_satisfaction": 0.38274932614555257,
+      "keyword_recall": 0.7286612758310871
+    },
+    "tied_seed3": {
+      "examples": 371,
+      "keyword_satisfaction": 0.32075471698113206,
+      "keyword_recall": 0.7017070979335129
+    },
+    "tied_seed4": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3557951482479784,
+      "keyword_recall": 0.7097933513027852
+    },
+    "tied_seed5": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3504043126684636,
+      "keyword_recall": 0.7160826594788859
+    },
+    "conflict_seed0": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3692722371967655,
+      "keyword_recall": 0.7205750224618148
+    },
+    "conflict_seed1": {
+      "examples": 371,
+      "keyword_satisfaction": 0.29110512129380056,
+      "keyword_recall": 0.6882300089847259
+    },
+    "conflict_seed2": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3746630727762803,
+      "keyword_recall": 0.7250673854447439
+    },
+    "conflict_seed3": {
+      "examples": 371,
+      "keyword_satisfaction": 0.31266846361185985,
+      "keyword_recall": 0.6945193171608266
+    },
+    "conflict_seed4": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3423180592991914,
+      "keyword_recall": 0.7115902964959568
+    },
+    "conflict_seed5": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33153638814016173,
+      "keyword_recall": 0.7079964061096137
+    },
+    "frequency_seed0": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33423180592991913,
+      "keyword_recall": 0.7070979335130279
+    },
+    "frequency_seed1": {
+      "examples": 371,
+      "keyword_satisfaction": 0.32345013477088946,
+      "keyword_recall": 0.6918238993710693
+    },
+    "frequency_seed2": {
+      "examples": 371,
+      "keyword_satisfaction": 0.39622641509433965,
+      "keyword_recall": 0.7349505840071878
+    },
+    "frequency_seed3": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33962264150943394,
+      "keyword_recall": 0.7026055705300989
+    },
+    "frequency_seed4": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33153638814016173,
+      "keyword_recall": 0.6972147349505841
+    },
+    "frequency_seed5": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3288409703504043,
+      "keyword_recall": 0.7053009883198563
+    },
+    "freq_random_seed0": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3665768194070081,
+      "keyword_recall": 0.7187780772686434
+    },
+    "freq_random_seed1": {
+      "examples": 371,
+      "keyword_satisfaction": 0.30997304582210244,
+      "keyword_recall": 0.6864330637915543
+    },
+    "freq_random_seed2": {
+      "examples": 371,
+      "keyword_satisfaction": 0.37735849056603776,
+      "keyword_recall": 0.7223719676549866
+    },
+    "freq_random_seed3": {
+      "examples": 371,
+      "keyword_satisfaction": 0.30727762803234504,
+      "keyword_recall": 0.6900269541778976
+    },
+    "freq_random_seed4": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3584905660377358,
+      "keyword_recall": 0.7115902964959568
+    },
+    "freq_random_seed5": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3557951482479784,
+      "keyword_recall": 0.7124887690925427
+    },
+    "tied_seed6": {
+      "examples": 371,
+      "keyword_satisfaction": 0.31266846361185985,
+      "keyword_recall": 0.6918238993710693
+    },
+    "tied_seed7": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33962264150943394,
+      "keyword_recall": 0.7187780772686434
+    },
+    "tied_seed8": {
+      "examples": 371,
+      "keyword_satisfaction": 0.31536388140161725,
+      "keyword_recall": 0.6918238993710693
+    },
+    "tied_seed9": {
+      "examples": 371,
+      "keyword_satisfaction": 0.31805929919137466,
+      "keyword_recall": 0.6891284815813118
+    },
+    "tied_seed10": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3584905660377358,
+      "keyword_recall": 0.7232704402515723
+    },
+    "tied_seed11": {
+      "examples": 371,
+      "keyword_satisfaction": 0.353099730458221,
+      "keyword_recall": 0.7106918238993711
+    },
+    "conflict_seed6": {
+      "examples": 371,
+      "keyword_satisfaction": 0.30997304582210244,
+      "keyword_recall": 0.6972147349505841
+    },
+    "conflict_seed7": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33962264150943394,
+      "keyword_recall": 0.7178796046720575
+    },
+    "conflict_seed8": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33692722371967654,
+      "keyword_recall": 0.6990116801437556
+    },
+    "conflict_seed9": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33153638814016173,
+      "keyword_recall": 0.6936208445642408
+    },
+    "conflict_seed10": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3692722371967655,
+      "keyword_recall": 0.7187780772686434
+    },
+    "conflict_seed11": {
+      "examples": 371,
+      "keyword_satisfaction": 0.37735849056603776,
+      "keyword_recall": 0.7223719676549866
+    },
+    "frequency_seed6": {
+      "examples": 371,
+      "keyword_satisfaction": 0.30997304582210244,
+      "keyword_recall": 0.6846361185983828
+    },
+    "frequency_seed7": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33692722371967654,
+      "keyword_recall": 0.7115902964959568
+    },
+    "frequency_seed8": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33423180592991913,
+      "keyword_recall": 0.6999101527403415
+    },
+    "frequency_seed9": {
+      "examples": 371,
+      "keyword_satisfaction": 0.33962264150943394,
+      "keyword_recall": 0.6891284815813118
+    },
+    "frequency_seed10": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3450134770889488,
+      "keyword_recall": 0.7250673854447439
+    },
+    "frequency_seed11": {
+      "examples": 371,
+      "keyword_satisfaction": 0.37735849056603776,
+      "keyword_recall": 0.729559748427673
+    },
+    "freq_random_seed6": {
+      "examples": 371,
+      "keyword_satisfaction": 0.32345013477088946,
+      "keyword_recall": 0.6972147349505841
+    },
+    "freq_random_seed7": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3504043126684636,
+      "keyword_recall": 0.7187780772686434
+    },
+    "freq_random_seed8": {
+      "examples": 371,
+      "keyword_satisfaction": 0.32075471698113206,
+      "keyword_recall": 0.6936208445642408
+    },
+    "freq_random_seed9": {
+      "examples": 371,
+      "keyword_satisfaction": 0.31266846361185985,
+      "keyword_recall": 0.6774483378256962
+    },
+    "freq_random_seed10": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3719676549865229,
+      "keyword_recall": 0.7259658580413297
+    },
+    "freq_random_seed11": {
+      "examples": 371,
+      "keyword_satisfaction": 0.3423180592991914,
+      "keyword_recall": 0.7097933513027852
+    }
+  },
+  "nonoverlap_subset_scope": "Excludes exact overlaps in scanned sources only; no NLL reconstruction from missing-word records."
+}

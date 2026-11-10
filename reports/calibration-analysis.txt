@@ -1,0 +1,74 @@
+eligible tokens with a conflict score: 6,341
+conflict score: mean=-0.0211 median=-0.0171 min=-0.5747 max=0.5199
+  fraction with conflict > 0.3: 1.01%
+  fraction with conflict < 0.0: 55.42%
+
+=== conflict vs. frequency (rank correlation) ===
+  Pearson : +0.0146
+  Spearman: +0.1118
+  (near 0 => conflict is NOT just re-discovering frequent tokens)
+
+=== conflict vs. gradient norm ===
+  Spearman (total norm): -0.0239
+  Spearman (input norm) : +0.0298
+  Spearman (output norm): +0.0400
+
+=== mean conflict by frequency decile (low->high freq) ===
+  decile  1: n=   592  mean conflict=-0.0425
+  decile  2: n=   650  mean conflict=-0.0477
+  decile  3: n=   658  mean conflict=-0.0388
+  decile  4: n=   633  mean conflict=-0.0340
+  decile  5: n=   637  mean conflict=-0.0235
+  decile  6: n=   626  mean conflict=-0.0147
+  decile  7: n=   640  mean conflict=-0.0089
+  decile  8: n=   636  mean conflict=+0.0019
+  decile  9: n=   634  mean conflict=+0.0026
+  decile 10: n=   635  mean conflict=-0.0059
+
+=== selection overlap (Jaccard, 400 rows each) ===
+  conflict vs frequency : 0.022
+  conflict vs grad-norm : 0.023
+
+=== top 20 tokens by conflict ===
+  'Ġlend'                  conflict=+0.520 freq=231
+  'Ġbutterfly'             conflict=+0.447 freq=3255
+  'ĠJacob'                 conflict=+0.433 freq=62
+  'Ġexplore'               conflict=+0.423 freq=3027
+  'Ġprepare'               conflict=+0.413 freq=201
+  'Ġcupcakes'              conflict=+0.404 freq=98
+  'ĠClaire'                conflict=+0.400 freq=74
+  'ĠJenna'                 conflict=+0.399 freq=93
+  'Ġcardboard'             conflict=+0.396 freq=163
+  'ĠC'                     conflict=+0.396 freq=596
+  'ĠLuke'                  conflict=+0.395 freq=102
+  'Ġevent'                 conflict=+0.394 freq=238
+  'ĠSunny'                 conflict=+0.390 freq=156
+  'ĠHarry'                 conflict=+0.390 freq=217
+  'Ġjewel'                 conflict=+0.389 freq=209
+  'Ġbone'                  conflict=+0.387 freq=672
+  'ĠTilly'                 conflict=+0.372 freq=129
+  'ĠMira'                  conflict=+0.368 freq=38
+  'Ġunpack'                conflict=+0.352 freq=243
+  'Ġpond'                  conflict=+0.349 freq=2109
+
+=== top 20 tokens by frequency ===
+  '.'                      conflict=-0.065 freq=635977
+  ','                      conflict=+0.037 freq=405147
+  'Ġthe'                   conflict=+0.168 freq=384395
+  'Ġand'                   conflict=+0.011 freq=380514
+  'Ġto'                    conflict=-0.084 freq=283450
+  'Ġa'                     conflict=-0.029 freq=216588
+  'Ġwas'                   conflict=+0.033 freq=192330
+  'Ċ'                      conflict=+0.081 freq=164556
+  'Ġit'                    conflict=-0.098 freq=116039
+  'Ġher'                   conflict=-0.099 freq=110210
+  'Ġ"'                     conflict=-0.006 freq=90242
+  'Ġsaid'                  conflict=+0.044 freq=84556
+  'Ġthat'                  conflict=+0.086 freq=78405
+  'Ġhe'                    conflict=-0.039 freq=77555
+  'Ġhis'                   conflict=-0.160 freq=72979
+  'Ġwith'                  conflict=+0.054 freq=68078
+  'ĠThe'                   conflict=+0.104 freq=67566
+  'Ġshe'                   conflict=+0.014 freq=66951
+  'Ġthey'                  conflict=-0.035 freq=64725
+  "'s"                     conflict=-0.005 freq=63594

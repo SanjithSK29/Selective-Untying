@@ -21,9 +21,12 @@ Run:
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import json
 import os
 import time
+from pathlib import Path
+from reproducibility import atomic_json, provenance, prepare_results, save_model, prepare_artifacts
 
 import numpy as np
 import torch
@@ -34,7 +37,7 @@ from sft import collate, configure_optimizer, evaluate, get_lr, load_pairs
 from transformer_architecture import SelectiveTransformer
 
 
-def run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device):
+def run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device, manifest=None):
     torch.manual_seed(seed)
     np.random.seed(seed)
 
@@ -53,7 +56,7 @@ def run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device):
     handle = model.token_embedding.register_forward_hook(fwd_hook)
 
     autocast = torch.autocast(device_type="cuda", dtype=torch.bfloat16) \
-        if device.type == "cuda" else torch.no_grad()
+        if device.type == "cuda" else nullcontext()
 
     rng = np.random.default_rng(seed)
     order = rng.permutation(len(train_pairs)).tolist()
@@ -86,7 +89,14 @@ def run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device):
 
     handle.remove()
     model.eval()
-    return evaluate(model, val_pairs, tok, ctx, device)
+    artifact = Path(args.artifact_dir) / f"gradscale_a{alpha:g}_seed{seed}"
+    result = evaluate(model, val_pairs, tok, ctx, device,
+                      artifact.with_suffix(".examples.json"))
+    save_model(artifact.with_suffix(".pt"), model, manifest, alpha=alpha, seed=seed)
+    atomic_json(artifact.with_suffix(".metadata.json"),
+                {"manifest": manifest, "alpha": alpha, "seed": seed,
+                 "selected_token_ids": [], "steps": args.max_steps})
+    return result
 
 
 def main():
@@ -95,7 +105,8 @@ def main():
     p.add_argument("--ckpt_path", default="checkpoints/latest.pt")
     p.add_argument("--sft_train", default="dataset/TinyStories-Instruct-train.txt")
     p.add_argument("--sft_valid", default="dataset/TinyStories-Instruct-valid.txt")
-    p.add_argument("--out", default="results_gradscale.json")
+    p.add_argument("--out", default="runs/gradscale/results.json")
+    p.add_argument("--artifact_dir", default="runs/gradscale/artifacts")
     p.add_argument("--context_length", type=int, default=256)
     p.add_argument("--sft_examples", type=int, default=20000)
     p.add_argument("--eval_examples", type=int, default=500)
@@ -119,10 +130,14 @@ def main():
     val_pairs = load_pairs(args.sft_valid, tok, ctx, args.eval_examples)
     print(f"train pairs: {len(train_pairs):,} | eval pairs: {len(val_pairs):,}")
 
-    results = {}
-    if os.path.exists(args.out):  # resume
-        with open(args.out) as f:
-            results = json.load(f)
+    if not train_pairs or not val_pairs:
+        raise ValueError("Training and evaluation data must contain qualifying pairs")
+    if ctx != 256:
+        raise ValueError("This experiment requires context_length=256")
+    manifest = provenance(args, [args.tokenizer_path, args.ckpt_path,
+                                args.sft_train, args.sft_valid])
+    results = prepare_results(args.out, manifest)
+    prepare_artifacts(args.artifact_dir, manifest)
 
     for alpha in args.alphas:
         for seed in args.seeds:
@@ -131,12 +146,11 @@ def main():
                 print(f"[{key}] already done, skipping")
                 continue
             t0 = time.time()
-            sat, nll = run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device)
+            sat, nll = run_one(args, alpha, seed, train_pairs, val_pairs, tok, ctx, device, manifest)
             results[key] = {"alpha": alpha, "seed": seed,
-                            "keyword_satisfaction": round(sat, 4),
-                            "response_nll": round(nll, 4)}
-            with open(args.out, "w") as f:
-                json.dump(results, f, indent=2)
+                            "keyword_satisfaction": sat,
+                            "response_nll": nll}
+            atomic_json(args.out, results)
             print(f"[{key}] satisfaction={sat:.4f} nll={nll:.4f} ({time.time()-t0:.0f}s)")
 
     print(f"\nwrote {args.out}")

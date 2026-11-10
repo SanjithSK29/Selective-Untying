@@ -25,11 +25,14 @@ Run:
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import json
 import math
 import os
 import re
 import time
+from pathlib import Path
+from reproducibility import sha256, atomic_json, provenance, prepare_results, save_model, prepare_artifacts
 
 import numpy as np
 import torch
@@ -203,11 +206,13 @@ def generate(model, instr_ids, ctx, eos_id, device, max_new=256):
     return ids[0].tolist()
 
 
-def evaluate(model, eval_pairs, tok, ctx, device, return_details=False):
+@torch.no_grad()
+def evaluate(model, eval_pairs, tok, ctx, device, output_path=None, return_details=False):
+    if not eval_pairs:
+        raise ValueError("No evaluation examples survived filtering")
+    records = []
     eos = tok.token_to_id("<eos>")
     hits = 0
-    recall_sum = 0.0
-    missing_words = []  # per prompt: requested words absent from the generation
     total_nll = 0.0
     total_tok = 0
 
@@ -217,29 +222,43 @@ def evaluate(model, eval_pairs, tok, ctx, device, return_details=False):
         batch = eval_pairs[b: b + bs]
         input_ids, targets = collate(batch, tok, device)
         logits = model(input_ids)
-        loss = F.cross_entropy(logits.view(-1, logits.size(-1)).float(),
-                               targets.view(-1), ignore_index=-100)
+        token_losses = F.cross_entropy(logits.transpose(1, 2).float(), targets,
+                                       ignore_index=-100, reduction="none")
+        counts = (targets != -100).sum(dim=1)
+        sums = token_losses.sum(dim=1)
+        loss = sums.sum() / counts.sum()
+        for j, (instr, resp, words) in enumerate(batch):
+            records.append({"example_id": len(records), "instruction_ids": instr,
+                            "reference_ids": resp, "words": words,
+                            "response_nll_sum": sums[j].item(),
+                            "response_token_count": counts[j].item()})
         n_tok = int((targets != -100).sum())
         total_nll += loss.item() * n_tok
         total_tok += n_tok
 
     # all-keyword satisfaction (greedy generation)
-    for instr, _, words in eval_pairs:
+    for index, (instr, _, words) in enumerate(eval_pairs):
         gen_ids = generate(model, instr, ctx, eos, device)
         gen_text = tok.decode(gen_ids[len(instr):])
         present = set(_WORD_RE.findall(gen_text.lower()))
         missing = [w for w in words if w not in present]
-        if not missing:
-            hits += 1
-        recall_sum += (len(words) - len(missing)) / max(len(words), 1)
-        missing_words.append(missing)
+        satisfied = not missing
+        hits += int(satisfied)
+        new_ids = gen_ids[len(instr):]
+        records[index].update({"generated_ids": new_ids, "generated_text": gen_text,
+                               "keyword_satisfaction": satisfied,
+                               "keyword_recall": (len(words) - len(missing)) / max(len(words), 1),
+                               "missing_words": missing,
+                               "generated_tokens": len(new_ids),
+                               "ended_with_eos": bool(new_ids and new_ids[-1] == eos),
+                               "context_slid": len(gen_ids) - 1 > ctx})
+    if output_path is not None:
+        atomic_json(output_path, records)
 
-    sat = hits / len(eval_pairs)
-    nll = total_nll / max(total_tok, 1)
+    sat, nll = hits / len(eval_pairs), total_nll / max(total_tok, 1)
     if return_details:
-        details = {"keyword_recall": recall_sum / len(eval_pairs),
-                   "missing_words": missing_words}
-        return sat, nll, details
+        return sat, nll, {"keyword_recall": sum(r["keyword_recall"] for r in records) / len(records),
+                          "missing_words": [r["missing_words"] for r in records]}
     return sat, nll
 
 
@@ -252,9 +271,12 @@ def main():
     p.add_argument("--tokenizer_path", default="tokenizer.json")
     p.add_argument("--ckpt_path", default="checkpoints/latest.pt")
     p.add_argument("--calibration", default="calibration.json")
+    p.add_argument("--allow_legacy_calibration", action="store_true",
+                   help="Explicitly allow calibration without original input hashes; provenance remains unverified")
     p.add_argument("--sft_train", default="dataset/TinyStories-Instruct-train.txt")
     p.add_argument("--sft_valid", default="dataset/TinyStories-Instruct-valid.txt")
-    p.add_argument("--out", default="results.json")
+    p.add_argument("--out", default="runs/sft/results.json")
+    p.add_argument("--artifact_dir", default="runs/sft/artifacts")
     p.add_argument("--vocab_size", type=int, default=8000)
     p.add_argument("--context_length", type=int, default=256)
     p.add_argument("--sft_examples", type=int, default=20000)
@@ -281,6 +303,17 @@ def main():
     if any(m in {"conflict", "frequency", "freq_random", "grad_norm"} for m in args.methods):
         with open(args.calibration) as f:
             calib = json.load(f)
+        calibration_manifest = calib.get("manifest")
+        if calibration_manifest is None:
+            if not args.allow_legacy_calibration:
+                raise ValueError("Legacy calibration has no provenance. Recalibrate or explicitly use --allow_legacy_calibration.")
+            print("WARNING: legacy calibration provenance is unverified")
+        else:
+            hashes = calibration_manifest["input_sha256"]
+            calibration_config = calibration_manifest["config"]
+            for name in ("ckpt_path", "tokenizer_path", "sft_train"):
+                if hashes.get(calibration_config[name]) != sha256(getattr(args, name)):
+                    raise ValueError(f"Calibration input mismatch: {name}. Recalibrate for this run.")
         eligible_count = calib["eligible_count"]
         selections = build_selections(calib, np.random.default_rng(0))
         print(f"loaded calibration (eligible={eligible_count:,})")
@@ -291,10 +324,15 @@ def main():
     val_pairs = load_pairs(args.sft_valid, tok, ctx, args.eval_examples)
     print(f"train pairs: {len(train_pairs):,} | eval pairs: {len(val_pairs):,}")
 
-    results = {}
-    if os.path.exists(args.out):  # resume: keep already-completed runs
-        with open(args.out) as f:
-            results = json.load(f)
+    if not train_pairs or not val_pairs:
+        raise ValueError("Training and evaluation data must contain qualifying pairs")
+    if args.vocab_size != 8000 or ctx != 256:
+        raise ValueError("This experiment requires vocab_size=8000 and context_length=256")
+    manifest = provenance(args, [args.tokenizer_path, args.ckpt_path,
+                                args.sft_train, args.sft_valid] +
+                          ([args.calibration] if calib is not None else []))
+    results = prepare_results(args.out, manifest)
+    prepare_artifacts(args.artifact_dir, manifest)
 
     for method in args.methods:
         if method not in METHODS:
@@ -319,7 +357,7 @@ def main():
             optimizer = configure_optimizer(model, args.weight_decay, args.lr)
 
             autocast = torch.autocast(device_type="cuda", dtype=torch.bfloat16) \
-                if device.type == "cuda" else torch.no_grad()
+                if device.type == "cuda" else nullcontext()
 
             rng = np.random.default_rng(seed)
             order = rng.permutation(len(train_pairs)).tolist()
@@ -345,21 +383,24 @@ def main():
                     print(f"  {key} step {step}/{args.max_steps} loss {loss.item():.3f}")
 
             model.eval()
-            sat, nll, det = evaluate(model, val_pairs, tok, ctx, device,
-                                     return_details=True)
+            artifact = Path(args.artifact_dir) / key
+            sat, nll, details = evaluate(model, val_pairs, tok, ctx, device,
+                                artifact.with_suffix(".examples.json"), return_details=True)
+            save_model(artifact.with_suffix(".pt"), model, manifest,
+                       method=method, seed=seed)
+            atomic_json(artifact.with_suffix(".metadata.json"),
+                        {"manifest": manifest, "selected_token_ids": selection_ids or [],
+                         "method": method, "seed": seed, "steps": args.max_steps})
             results[key] = {"method": method, "seed": seed,
-                            "keyword_satisfaction": round(sat, 4),
-                            "response_nll": round(nll, 4),
-                            "keyword_recall": round(det["keyword_recall"], 4),
-                            "missing_words": det["missing_words"]}
-            with open(args.out, "w") as f:  # save incrementally (crash-safe)
-                json.dump(results, f, indent=2)
+                            "keyword_satisfaction": sat,
+                            "response_nll": nll,
+                            "keyword_recall": details["keyword_recall"],
+                            "missing_words": details["missing_words"]}
+            atomic_json(args.out, results)
             print(f"[{key}] keyword_satisfaction={sat:.4f} response_nll={nll:.4f} "
-                  f"keyword_recall={det['keyword_recall']:.4f} "
                   f"({time.time() - t0:.0f}s)")
 
-    with open(args.out, "w") as f:
-        json.dump(results, f, indent=2)
+    atomic_json(args.out, results)
     print(f"\nwrote {args.out}")
 
 

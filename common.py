@@ -87,10 +87,29 @@ def load_pretrained(model: SelectiveTransformer, ckpt_path: str,
     """
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=True)
     sd = ckpt["model"]
-    model_sd = model.state_dict()
-    keep = {k: v for k, v in sd.items()
-            if k in model_sd and model_sd[k].shape == v.shape}
-    model.load_state_dict(keep, strict=False)
+    from dataclasses import asdict
+    config = asdict(model.config)
+    if ckpt.get("config", config) != config:
+        raise ValueError("Checkpoint architecture does not match model configuration")
+    for key in ("vocab_size", "context_length"):
+        if key in ckpt and ckpt[key] != config[key]:
+            raise ValueError(f"Checkpoint {key} mismatch")
+    if ckpt.get("output_mode", "tied") != "tied":
+        raise ValueError("Expected a tied pretrained checkpoint")
+    special = {"selected_token_ids", "output_offsets"}
+    for key in special:
+        if key in sd and sd[key].numel():
+            raise ValueError("Expected empty selection and offsets in tied checkpoint")
+    expected = model.state_dict()
+    backbone = set(expected) - special - {"output_embedding.weight"}
+    supplied = set(sd) - special
+    if supplied != backbone:
+        raise ValueError(f"Checkpoint keys mismatch: missing={backbone-supplied}, unexpected={supplied-backbone}")
+    for key in backbone:
+        if sd[key].shape != expected[key].shape:
+            raise ValueError(f"Checkpoint tensor shape mismatch: {key}")
+        expected[key] = sd[key]
+    model.load_state_dict(expected, strict=True)
     if model.output_mode == "full":
         model.init_output_from_input()
     return model
