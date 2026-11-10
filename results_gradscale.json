@@ -52,5 +52,59 @@
     "seed": 2,
     "keyword_satisfaction": 0.356,
     "response_nll": 1.5041
+  },
+  "gradscale_a10_seed3": {
+    "alpha": 10.0,
+    "seed": 3,
+    "keyword_satisfaction": 0.326,
+    "response_nll": 1.5048
+  },
+  "gradscale_a10_seed4": {
+    "alpha": 10.0,
+    "seed": 4,
+    "keyword_satisfaction": 0.318,
+    "response_nll": 1.5052
+  },
+  "gradscale_a10_seed5": {
+    "alpha": 10.0,
+    "seed": 5,
+    "keyword_satisfaction": 0.336,
+    "response_nll": 1.5059
+  },
+  "gradscale_a10_seed6": {
+    "alpha": 10.0,
+    "seed": 6,
+    "keyword_satisfaction": 0.286,
+    "response_nll": 1.5051
+  },
+  "gradscale_a10_seed7": {
+    "alpha": 10.0,
+    "seed": 7,
+    "keyword_satisfaction": 0.346,
+    "response_nll": 1.5051
+  },
+  "gradscale_a10_seed8": {
+    "alpha": 10.0,
+    "seed": 8,
+    "keyword_satisfaction": 0.314,
+    "response_nll": 1.5056
+  },
+  "gradscale_a10_seed9": {
+    "alpha": 10.0,
+    "seed": 9,
+    "keyword_satisfaction": 0.33,
+    "response_nll": 1.5047
+  },
+  "gradscale_a10_seed10": {
+    "alpha": 10.0,
+    "seed": 10,
+    "keyword_satisfaction": 0.362,
+    "response_nll": 1.5066
+  },
+  "gradscale_a10_seed11": {
+    "alpha": 10.0,
+    "seed": 11,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.505
   }
 }
