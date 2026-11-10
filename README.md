@@ -161,9 +161,9 @@ Sources: [results_gradscale.json](results_gradscale.json) and
 
 ## Install and analyze
 
-The historical environment uses **Python 3.13**, PyTorch 2.14.1+cu130 and an
+We ran our GPU experiments with **Python 3.13**, PyTorch 2.14.1+cu130 and an
 RTX 4060 Laptop GPU with 8 GB VRAM. [requirements.txt](requirements.txt) records
-the author's package versions. Analysis dependencies are separate.
+the package versions we used. Analysis dependencies are separate.
 
 ~~~bash
 python -m venv .venv
@@ -181,9 +181,9 @@ Check the actual environment before training:
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
 ~~~
 
-CPU training is supported, but full experiments are much slower. Local CPU checks
-used Python 3.14 with slightly different NumPy/tqdm patch versions; actual versions
-and verification limits are recorded in [VALIDATION.md](VALIDATION.md).
+We also checked CPU execution using Python 3.14 with slightly different NumPy/tqdm
+patch versions. Full experiments are much slower on CPU. We document both
+environments and the scope of our checks in [VALIDATION.md](VALIDATION.md).
 
 **No GPU, dataset or checkpoint download is needed to rebuild tables and plots:**
 
@@ -205,7 +205,7 @@ Official sources:
 
 - [TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories): the
   dataset's train/validation splits, exported to single-column CSVs with a text
-  header. The author confirmed **2,119,719 training rows**.
+  header. Our pretraining split contains **2,119,719 training rows**.
 - [TinyStoriesInstruct](https://huggingface.co/datasets/roneneldan/TinyStoriesInstruct):
   TinyStories-Instruct-train.txt / TinyStories-Instruct-valid.txt for calibration,
   fine-tuning and evaluation. The training file is approximately 2.7 GB.
@@ -218,12 +218,12 @@ python download_data.py --only instruct  # calibration / SFT only
 New downloads resolve immutable source commits and record checksums in
 dataset/sources.json. Pass --stories_revision and --instruct_revision to repeat
 recorded revisions. Existing files are skipped; skipping a legacy file does not
-establish its provenance. Exact historical source revisions were not recorded
-during the experiments. Respect source licenses and attribution.
+establish its provenance. We did not record exact source revisions
+during the original experiments. Respect source licenses and attribution.
 
 ### Original pretrained checkpoint
 
-Download the author-supplied model:
+Download our pretrained checkpoint:
 **[ishrya/selective-untying/latest.pt](https://huggingface.co/ishrya/selective-untying/resolve/main/latest.pt)**.
 The approximately 166 MB file includes optimizer state.
 
@@ -238,9 +238,10 @@ Expected original-checkpoint SHA-256:
 b18fabcfc8430769487a3bb96d1e8b83c7eb49510145eba6fecb300e3bd270a0
 ~~~
 
-The supplied checkpoint passes strict model loading and records step **28,503**
+Our checkpoint passes strict model loading and records step **28,503**
 and validation loss **1.4663459479808807**, corresponding to perplexity **4.33337**.
-The received tokenizer is structurally identical to the repository tokenizer;
+We verified that the tokenizer used with our checkpoint is structurally identical
+to the repository tokenizer;
 text formatting can change byte hashes. These checks establish structure and
 metadata consistency, not independent reproduction of all scores.
 See [checkpoint verification](reports/checkpoint-verification.json).
@@ -296,13 +297,13 @@ calibration and both SFT scripts, and choose new result directories. Never mix
 checkpoints within a paired comparison.
 
 The committed calibration.json predates hash manifests. Explicit
---allow_legacy_calibration permits reuse, with a warning. The author reports
-recalibration reproduced the exact same 400 IDs. New traceable calibration must
+--allow_legacy_calibration permits reuse, with a warning. We reran calibration
+and reproduced the exact same 400 selected token IDs. New traceable calibration must
 match the checkpoint, tokenizer and training-data hashes used for the run.
 
 ### Compute
 
-Author-reported historical timings on the RTX 4060 Laptop GPU:
+Approximate timings from our runs on the RTX 4060 Laptop GPU:
 
 - Pretraining: approximately 78 minutes plus 8 minutes preparation.
 - Calibration: **392 seconds**.
@@ -345,9 +346,9 @@ new paths. See [VALIDATION.md](VALIDATION.md) for checks and limits.
 - One checkpoint, one task, one evaluation prefix and one random token selection
   limit generalization. Hyperparameters and selector stability were not exhaustively tested.
 
-**Human coherence/integration ratings have not been conducted or supplied.**
-No human scores, demonstrated fluency gains or semantic-compliance claims are
-made. NLL and keyword presence do not establish generated-story coherence.
+**We have not conducted blinded human coherence or keyword-integration ratings.**
+We therefore do not claim human-rated fluency gains or semantic instruction-following
+improvements. NLL and keyword presence do not establish generated-story coherence.
 See [evaluation definitions and claim boundaries](docs/EVALUATION.md).
 
 ### Training/evaluation overlap
@@ -381,8 +382,8 @@ The audit reconstructs the 500 evaluation examples, first 20,000 qualifying SFT
 examples and 10M-token calibration prefix, then scans the official TinyStories
 training split. Source revisions, matched indices and remaining-subset lexical
 metrics are recorded in [reports/overlap-audit.json](reports/overlap-audit.json).
-It checks case/whitespace-normalized exact stories, not near duplicates or semantic
-similarity. Historical results are preserved; any clean-subset analysis is labeled
+We check case/whitespace-normalized exact stories, not near duplicates or semantic
+similarity. We preserve our original full-set results and label the subset analysis
 separately. Aggregate records cannot reconstruct subset NLL.
 
 ## Repository guide
@@ -407,10 +408,10 @@ separately. Aggregate records cannot reconstruct subset NLL.
 | findings.txt | Updated conclusions |
 | VALIDATION.md | Verification evidence and limits |
 
-Paper, final presentation and video are prepared separately by the team.
+We are preparing our paper, final presentation and video separately.
 The one-page proposal PDF is an earlier project artifact, not the final report.
-No project-wide software license has been selected by the authors; public access
-alone does not grant an open-source license. Dataset terms belong to their sources.
+We have not selected a project-wide software license; public access alone does
+not grant an open-source license. Dataset terms belong to their sources.
 
 ## References
 
