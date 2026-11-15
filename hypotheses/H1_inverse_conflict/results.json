@@ -1,0 +1,74 @@
+{
+  "inverse_conflict_5_seed0": {
+    "intervention": "inverse_conflict",
+    "dose": 5.0,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.352,
+    "response_nll": 1.5077687506623516,
+    "keyword_recall": 0.7166666666666667
+  },
+  "inverse_conflict_5_seed1": {
+    "intervention": "inverse_conflict",
+    "dose": 5.0,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.284,
+    "response_nll": 1.507370664973139,
+    "keyword_recall": 0.67
+  },
+  "inverse_conflict_5_seed2": {
+    "intervention": "inverse_conflict",
+    "dose": 5.0,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.362,
+    "response_nll": 1.5076569381846394,
+    "keyword_recall": 0.7153333333333333
+  },
+  "inverse_conflict_5_seed3": {
+    "intervention": "inverse_conflict",
+    "dose": 5.0,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.5083311319336365,
+    "keyword_recall": 0.696
+  },
+  "inverse_conflict_10_seed0": {
+    "intervention": "inverse_conflict",
+    "dose": 10.0,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.356,
+    "response_nll": 1.5078401590793635,
+    "keyword_recall": 0.716
+  },
+  "inverse_conflict_10_seed1": {
+    "intervention": "inverse_conflict",
+    "dose": 10.0,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.296,
+    "response_nll": 1.5073697149842555,
+    "keyword_recall": 0.6826666666666666
+  },
+  "inverse_conflict_10_seed2": {
+    "intervention": "inverse_conflict",
+    "dose": 10.0,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.354,
+    "response_nll": 1.5076028172161247,
+    "keyword_recall": 0.716
+  },
+  "inverse_conflict_10_seed3": {
+    "intervention": "inverse_conflict",
+    "dose": 10.0,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.3,
+    "response_nll": 1.508380886864146,
+    "keyword_recall": 0.6873333333333332
+  }
+}

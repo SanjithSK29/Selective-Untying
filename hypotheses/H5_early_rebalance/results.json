@@ -1,0 +1,218 @@
+{
+  "early_rebalance_10@250_seed0": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 0,
+    "keyword_satisfaction": 0.364,
+    "response_nll": 1.5058622238321013,
+    "keyword_recall": 0.718
+  },
+  "early_rebalance_10@250_seed1": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 1,
+    "keyword_satisfaction": 0.322,
+    "response_nll": 1.505570035287473,
+    "keyword_recall": 0.696
+  },
+  "early_rebalance_10@250_seed2": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 2,
+    "keyword_satisfaction": 0.382,
+    "response_nll": 1.5057708583948297,
+    "keyword_recall": 0.7233333333333333
+  },
+  "early_rebalance_10@250_seed3": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 3,
+    "keyword_satisfaction": 0.312,
+    "response_nll": 1.506455801105167,
+    "keyword_recall": 0.6846666666666666
+  },
+  "early_rebalance_10@500_seed0": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 0,
+    "keyword_satisfaction": 0.338,
+    "response_nll": 1.50421222950517,
+    "keyword_recall": 0.7073333333333333
+  },
+  "early_rebalance_10@500_seed1": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 1,
+    "keyword_satisfaction": 0.32,
+    "response_nll": 1.5040746744680416,
+    "keyword_recall": 0.6873333333333332
+  },
+  "early_rebalance_10@500_seed2": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 2,
+    "keyword_satisfaction": 0.364,
+    "response_nll": 1.5040375389205072,
+    "keyword_recall": 0.718
+  },
+  "early_rebalance_10@500_seed3": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 3,
+    "keyword_satisfaction": 0.316,
+    "response_nll": 1.504964012727716,
+    "keyword_recall": 0.6846666666666666
+  },
+  "early_rebalance_10@250_seed4": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 4,
+    "keyword_satisfaction": 0.314,
+    "response_nll": 1.5067534073916617,
+    "keyword_recall": 0.694
+  },
+  "early_rebalance_10@250_seed5": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 5,
+    "keyword_satisfaction": 0.36,
+    "response_nll": 1.5078817765461803,
+    "keyword_recall": 0.7146666666666667
+  },
+  "early_rebalance_10@250_seed6": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 6,
+    "keyword_satisfaction": 0.336,
+    "response_nll": 1.5066737795638396,
+    "keyword_recall": 0.7046666666666667
+  },
+  "early_rebalance_10@250_seed7": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 7,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.506936116645988,
+    "keyword_recall": 0.712
+  },
+  "early_rebalance_10@250_seed8": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 8,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.507211701205252,
+    "keyword_recall": 0.69
+  },
+  "early_rebalance_10@250_seed9": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 9,
+    "keyword_satisfaction": 0.326,
+    "response_nll": 1.5065231607680476,
+    "keyword_recall": 0.6913333333333332
+  },
+  "early_rebalance_10@250_seed10": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 10,
+    "keyword_satisfaction": 0.348,
+    "response_nll": 1.5081129232073458,
+    "keyword_recall": 0.7173333333333333
+  },
+  "early_rebalance_10@250_seed11": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 250.0,
+    "seed": 11,
+    "keyword_satisfaction": 0.308,
+    "response_nll": 1.506960608001727,
+    "keyword_recall": 0.6946666666666667
+  },
+  "early_rebalance_10@500_seed4": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 4,
+    "keyword_satisfaction": 0.316,
+    "response_nll": 1.5053244919511743,
+    "keyword_recall": 0.6913333333333332
+  },
+  "early_rebalance_10@500_seed5": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 5,
+    "keyword_satisfaction": 0.362,
+    "response_nll": 1.5062364064555585,
+    "keyword_recall": 0.7126666666666667
+  },
+  "early_rebalance_10@500_seed6": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 6,
+    "keyword_satisfaction": 0.31,
+    "response_nll": 1.5048655090654748,
+    "keyword_recall": 0.6833333333333332
+  },
+  "early_rebalance_10@500_seed7": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 7,
+    "keyword_satisfaction": 0.342,
+    "response_nll": 1.5053256723619155,
+    "keyword_recall": 0.7193333333333333
+  },
+  "early_rebalance_10@500_seed8": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 8,
+    "keyword_satisfaction": 0.32,
+    "response_nll": 1.5057334270101188,
+    "keyword_recall": 0.6986666666666667
+  },
+  "early_rebalance_10@500_seed9": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 9,
+    "keyword_satisfaction": 0.316,
+    "response_nll": 1.5047904045687412,
+    "keyword_recall": 0.688
+  },
+  "early_rebalance_10@500_seed10": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 10,
+    "keyword_satisfaction": 0.348,
+    "response_nll": 1.5067527862931698,
+    "keyword_recall": 0.7146666666666667
+  },
+  "early_rebalance_10@500_seed11": {
+    "intervention": "early_rebalance",
+    "dose": 10.0,
+    "extra": 500.0,
+    "seed": 11,
+    "keyword_satisfaction": 0.334,
+    "response_nll": 1.5052787486891095,
+    "keyword_recall": 0.6946666666666667
+  }
+}

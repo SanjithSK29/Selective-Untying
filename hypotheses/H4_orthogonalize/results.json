@@ -1,0 +1,74 @@
+{
+  "orthogonalize_0.5_seed0": {
+    "intervention": "orthogonalize",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.352,
+    "response_nll": 1.5076175939965586,
+    "keyword_recall": 0.7173333333333333
+  },
+  "orthogonalize_0.5_seed1": {
+    "intervention": "orthogonalize",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.292,
+    "response_nll": 1.5073442506994825,
+    "keyword_recall": 0.678
+  },
+  "orthogonalize_0.5_seed2": {
+    "intervention": "orthogonalize",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.37,
+    "response_nll": 1.5075690886072033,
+    "keyword_recall": 0.722
+  },
+  "orthogonalize_0.5_seed3": {
+    "intervention": "orthogonalize",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.5080755362465597,
+    "keyword_recall": 0.694
+  },
+  "orthogonalize_1_seed0": {
+    "intervention": "orthogonalize",
+    "dose": 1.0,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.368,
+    "response_nll": 1.507673046284275,
+    "keyword_recall": 0.7153333333333333
+  },
+  "orthogonalize_1_seed1": {
+    "intervention": "orthogonalize",
+    "dose": 1.0,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.272,
+    "response_nll": 1.5074684786452497,
+    "keyword_recall": 0.6666666666666666
+  },
+  "orthogonalize_1_seed2": {
+    "intervention": "orthogonalize",
+    "dose": 1.0,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.37,
+    "response_nll": 1.507635238441136,
+    "keyword_recall": 0.726
+  },
+  "orthogonalize_1_seed3": {
+    "intervention": "orthogonalize",
+    "dose": 1.0,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.318,
+    "response_nll": 1.508208650500361,
+    "keyword_recall": 0.692
+  }
+}

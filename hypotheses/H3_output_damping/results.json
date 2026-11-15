@@ -1,0 +1,218 @@
+{
+  "output_damping_0.5_seed0": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.356,
+    "response_nll": 1.5068455920153574,
+    "keyword_recall": 0.7113333333333333
+  },
+  "output_damping_0.5_seed1": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.298,
+    "response_nll": 1.5065320933716426,
+    "keyword_recall": 0.6786666666666666
+  },
+  "output_damping_0.5_seed2": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.368,
+    "response_nll": 1.5068358299698987,
+    "keyword_recall": 0.724
+  },
+  "output_damping_0.5_seed3": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.326,
+    "response_nll": 1.5074300467745527,
+    "keyword_recall": 0.6913333333333332
+  },
+  "output_damping_0.1_seed0": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 0,
+    "keyword_satisfaction": 0.336,
+    "response_nll": 1.5031351536282498,
+    "keyword_recall": 0.706
+  },
+  "output_damping_0.1_seed1": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 1,
+    "keyword_satisfaction": 0.29,
+    "response_nll": 1.5030914468354744,
+    "keyword_recall": 0.6826666666666666
+  },
+  "output_damping_0.1_seed2": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 2,
+    "keyword_satisfaction": 0.348,
+    "response_nll": 1.5032691371414193,
+    "keyword_recall": 0.7093333333333333
+  },
+  "output_damping_0.1_seed3": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 3,
+    "keyword_satisfaction": 0.308,
+    "response_nll": 1.5040550116847242,
+    "keyword_recall": 0.6806666666666666
+  },
+  "output_damping_0.5_seed4": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 4,
+    "keyword_satisfaction": 0.328,
+    "response_nll": 1.507617055838842,
+    "keyword_recall": 0.7
+  },
+  "output_damping_0.5_seed5": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 5,
+    "keyword_satisfaction": 0.356,
+    "response_nll": 1.508560222577147,
+    "keyword_recall": 0.7093333333333333
+  },
+  "output_damping_0.5_seed6": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 6,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.5073322133286493,
+    "keyword_recall": 0.6986666666666667
+  },
+  "output_damping_0.5_seed7": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 7,
+    "keyword_satisfaction": 0.344,
+    "response_nll": 1.5080009421563083,
+    "keyword_recall": 0.722
+  },
+  "output_damping_0.5_seed8": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 8,
+    "keyword_satisfaction": 0.306,
+    "response_nll": 1.5080659039713429,
+    "keyword_recall": 0.6853333333333332
+  },
+  "output_damping_0.5_seed9": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 9,
+    "keyword_satisfaction": 0.324,
+    "response_nll": 1.5075465009932674,
+    "keyword_recall": 0.6953333333333332
+  },
+  "output_damping_0.5_seed10": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 10,
+    "keyword_satisfaction": 0.34,
+    "response_nll": 1.5089741753253452,
+    "keyword_recall": 0.7093333333333333
+  },
+  "output_damping_0.5_seed11": {
+    "intervention": "output_damping",
+    "dose": 0.5,
+    "extra": null,
+    "seed": 11,
+    "keyword_satisfaction": 0.338,
+    "response_nll": 1.5080572589353176,
+    "keyword_recall": 0.7066666666666667
+  },
+  "output_damping_0.1_seed4": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 4,
+    "keyword_satisfaction": 0.318,
+    "response_nll": 1.5043481717479854,
+    "keyword_recall": 0.702
+  },
+  "output_damping_0.1_seed5": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 5,
+    "keyword_satisfaction": 0.338,
+    "response_nll": 1.5050947745364232,
+    "keyword_recall": 0.6973333333333332
+  },
+  "output_damping_0.1_seed6": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 6,
+    "keyword_satisfaction": 0.292,
+    "response_nll": 1.5041749233376716,
+    "keyword_recall": 0.6793333333333332
+  },
+  "output_damping_0.1_seed7": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 7,
+    "keyword_satisfaction": 0.336,
+    "response_nll": 1.5043635773477817,
+    "keyword_recall": 0.714
+  },
+  "output_damping_0.1_seed8": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 8,
+    "keyword_satisfaction": 0.304,
+    "response_nll": 1.5046349233360723,
+    "keyword_recall": 0.6833333333333332
+  },
+  "output_damping_0.1_seed9": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 9,
+    "keyword_satisfaction": 0.316,
+    "response_nll": 1.5039326113116893,
+    "keyword_recall": 0.6833333333333332
+  },
+  "output_damping_0.1_seed10": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 10,
+    "keyword_satisfaction": 0.344,
+    "response_nll": 1.5057173747229142,
+    "keyword_recall": 0.7146666666666667
+  },
+  "output_damping_0.1_seed11": {
+    "intervention": "output_damping",
+    "dose": 0.1,
+    "extra": null,
+    "seed": 11,
+    "keyword_satisfaction": 0.318,
+    "response_nll": 1.5041021331369833,
+    "keyword_recall": 0.6866666666666666
+  }
+}
