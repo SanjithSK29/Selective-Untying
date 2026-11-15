@@ -408,10 +408,6 @@ separately. Aggregate records cannot reconstruct subset NLL.
 | findings.txt | Updated conclusions |
 | VALIDATION.md | Verification evidence and limits |
 
-We are preparing our paper, final presentation and video separately.
-The one-page proposal PDF is an earlier project artifact, not the final report.
-We have not selected a project-wide software license; public access alone does
-not grant an open-source license. Dataset terms belong to their sources.
 
 ## References
 
