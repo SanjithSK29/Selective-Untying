@@ -1,0 +1,13 @@
+loading SFT pairs...
+train pairs: 20,000 | eval pairs: 500
+[gradscale_a2_seed0] satisfaction=0.3540 nll=1.5069 (200s)
+[gradscale_a2_seed1] satisfaction=0.3000 nll=1.5067 (203s)
+[gradscale_a2_seed2] satisfaction=0.3720 nll=1.5069 (196s)
+[gradscale_a5_seed0] satisfaction=0.3460 nll=1.5054 (198s)
+[gradscale_a5_seed1] satisfaction=0.2860 nll=1.5053 (202s)
+[gradscale_a5_seed2] satisfaction=0.3720 nll=1.5056 (197s)
+[gradscale_a10_seed0] satisfaction=0.3400 nll=1.5040 (199s)
+[gradscale_a10_seed1] satisfaction=0.2880 nll=1.5039 (201s)
+[gradscale_a10_seed2] satisfaction=0.3560 nll=1.5041 (196s)
+
+wrote results_gradscale.json
