@@ -1,0 +1,50 @@
+name: Reproducibility or tooling issue
+description: Report a concrete problem with setup, validation, analysis, or experiment execution.
+title: "[Issue]: "
+labels:
+  - reproducibility
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please avoid including credentials, private datasets, or downloaded checkpoints.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and the result you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include the command, arguments, and the smallest input that reproduces the issue.
+      placeholder: |
+        1. Install ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Repository revision
+      description: Provide the commit SHA or branch used.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python, PyTorch, and CPU/GPU details.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Paste the shortest relevant error or validation output. Remove sensitive values.
+      render: text
+    validations:
+      required: false
